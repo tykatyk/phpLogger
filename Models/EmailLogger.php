@@ -34,6 +34,10 @@ class EmailLogger extends Logger
     $additional_params = LOGGERS['email']['additional_params'];
 
     $result = mail($to, $subject, $message, $additional_headers, $additional_params);
-    if($result === false) trigger_error("Can't send to ".$to. ". Unknown error");
+    if($result === false){
+      trigger_error("Can't send to ".$to. ". Unknown error");
+    } else {
+      echo "'".$message."' was sent via ".$this->getType();
+    }
   }
 }

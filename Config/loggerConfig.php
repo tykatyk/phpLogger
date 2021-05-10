@@ -15,12 +15,11 @@ define("phpLogger\Config\LOGGERS", [
     ],
     "additional_params" => ""
   ],
-  "database" => [
-    "DB_CONN" => "mySQL",
-    "DB_HOST" => "",
-    "DB_NAME" => "",
-    "DB_USER" => "",
-    "DB_PASSWORD" => ""
+  "db" => [
+    "host" => "127.0.0.1",
+    "database" => "phpLogger",
+    "user" => "root",
+    "password" => ""
   ],
   "file" => [
     "path" => str_replace("/", DIRECTORY_SEPARATOR, __DIR__."/../Storage/log.txt"),
@@ -28,4 +27,4 @@ define("phpLogger\Config\LOGGERS", [
 ]);
 
 //sets default logger
-define("phpLogger\Config\DEFAULT_LOGGER", "file");
+define("phpLogger\Config\DEFAULT_LOGGER", "db");
