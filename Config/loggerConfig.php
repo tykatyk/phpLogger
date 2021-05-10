@@ -1,9 +1,14 @@
 <?php
 namespace phpLogger\Config;
 
+//available loggers and their configuration
+//new loggers can be added here
 define("phpLogger\Config\LOGGERS", [
   "email" => [
-    "address" => "example@com.ua"
+    "to" => "tykatyk@gmail.com",
+    "subject" => "New message from phpLogger",
+    "additional_headers" => [],
+    "additional_params" => ""
   ],
   "database" => [
     "DB_CONN" => "mySQL",
@@ -17,4 +22,5 @@ define("phpLogger\Config\LOGGERS", [
   ]
 ]);
 
+//sets default logger
 define("phpLogger\Config\DEFAULT_LOGGER", "file");

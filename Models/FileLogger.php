@@ -25,6 +25,6 @@ class FileLogger extends Logger
     }
 
     $result = file_put_contents($this->path, $message, FILE_APPEND | LOCK_EX);
-    if($result === false)  trigger_error("Can not write to file ".$loggers->file->path, E_USER_ERROR);
+    if($result === false)  trigger_error("Can not write to file ".$loggers->file->path);
   }
 }
