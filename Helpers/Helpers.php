@@ -2,7 +2,7 @@
 namespace phpLogger\Helpers;
 use const phpLogger\Config\LOGGERS;
 use const phpLogger\Config\DEFAULT_LOGGER;
-include_once __DIR__."/../Config/loggerConfig.php";
+include_once __DIR__."/../Config/settings.php";
 
 class Helpers {
   public static function loggerTypeIsValid(string $type) {

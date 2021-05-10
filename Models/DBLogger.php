@@ -4,7 +4,7 @@ use phpLogger\Helpers\Helpers;
 use phpLogger\Factory\Logger;
 use const \phpLogger\Config\LOGGERS;
 include_once __DIR__."/../Config/autoload.php";
-include_once __DIR__."/../Config/loggerConfig.php";
+include_once __DIR__."/../Config/settings.php";
 
 class DbLogger extends Logger
 {
@@ -17,20 +17,24 @@ class DbLogger extends Logger
     $this->user = LOGGERS["db"]["user"];
     $this->password = LOGGERS["db"]["password"];
     $this->conn = new \mysqli($this->host, $this->user, $this->password, $this->database);
-    if($this->conn->connect_errno) trigger_error("Can't connect to the database. ".$this->conn->connect_errno, E_USER_ERROR);
+    if($this->conn->connect_errno) trigger_error($this->conn->connect_errno. " ".$this->conn->connect_error, E_USER_ERROR);
   }
 
   public function send(string $message):void {
-    if(Helpers::messageIsEmpty($message)) return;
-    if(!Helpers::messageHasNewLineChar($message)) $message = $message."\n";
+    if(Helpers::messageIsEmpty($message)) {
+      echo ("Nothing to log. Message is empty.");
+      return;
+    };
+    if(!Helpers::messageHasNewLineChar($message)) $message = $message."\r\n";
 
+    //make sure the logger will correctly send a message even if it's type was dynamically changed
     if($this->currentType != $this->initialType) {
       sendByLogger($message, $this->currentType);
       return;
     }
     $sql = "INSERT INTO LOGS(message) VALUES("."'".$message."')";
     if(!$this->conn->query($sql)){
-      trigger_error("Can't log to the database: (".$mysqli->errno . ") ".$mysqli->error);
+      trigger_error("Can't log to the database: (".$this->conn->errno . "). ".$this->conn->error);
     } else {
       echo "'".$message."' was sent via ".$this->currentType;
     }

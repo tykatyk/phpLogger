@@ -4,7 +4,7 @@ use phpLogger\Helpers\Helpers;
 use phpLogger\Factory\Logger;
 use const \phpLogger\Config\LOGGERS;
 include_once __DIR__."/../Config/autoload.php";
-include_once __DIR__."/../Config/loggerConfig.php";
+include_once __DIR__."/../Config/settings.php";
 
 class EmailLogger extends Logger
 {
@@ -19,10 +19,14 @@ class EmailLogger extends Logger
   }
 
   public function send(string $message):void {
-    if(Helpers::messageIsEmpty($message)) return;
-    if(!Helpers::messageHasNewLineChar($message)) $message = $message."\n";
+    if(Helpers::messageIsEmpty($message)) {
+      echo ("Nothing to log. Message is empty.");
+      return;
+    };
+    if(!Helpers::messageHasNewLineChar($message)) $message = $message."\r\n";
     $message = wordwrap($message, 70, "\r\n");
 
+    //make sure the logger will correctly send a message even if it's type was dynamically changed
     if($this->currentType != $this->initialType) {
       sendByLogger($message, $this->currentType);
       return;
@@ -35,7 +39,7 @@ class EmailLogger extends Logger
 
     $result = mail($to, $subject, $message, $additional_headers, $additional_params);
     if($result === false){
-      trigger_error("Can't send to ".$to. ". Unknown error");
+      trigger_error("Can't log to ".$to. ". Unknown error");
     } else {
       echo "'".$message."' was sent via ".$this->getType();
     }

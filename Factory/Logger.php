@@ -3,28 +3,30 @@ namespace phpLogger\Factory;
 use phpLogger\Helpers\Helpers;
 include_once __DIR__."/../Config/autoload.php";
 
-//This is a logger factory
 abstract class Logger
 {
   private $initialType;
   private $currentType;
 
-  public static function createLogger(string $type){
-    if(!Helpers::loggerTypeIsValid($type)) trigger_error("Invalid logger type", E_USER_ERROR);
+  public static function createLogger(string $type){//this is a factory method
+    if(!Helpers::loggerTypeIsValid($type)) trigger_error("Can't create logger of type ".$type.". Invalid type.", E_USER_ERROR);
     $modelsNamespace = "\\phpLogger\\Models";
     $type = $modelsNamespace."\\".ucwords($type)."Logger";
     return new $type();
   }
 
-  abstract protected function send(string $message): void;
+  abstract public function send(string $message): void;
 
-  public function sendByLogger(string $message, string $loggerType) {
-    if(!Helpers::loggerTypeIsValid()) trigger_error("Invalid logger type", E_USER_ERROR);
-    if( ($this->currentType == $this->initialType) && ($this->currentType == $loggerType) ) {
+  public function sendByLogger(string $message, string $type) {
+    if(!Helpers::loggerTypeIsValid($type)) {
+      trigger_error("Message wasn't sent. Invalid logger type.");
+      return;
+    }
+    if( ($this->currentType == $this->initialType) && ($this->currentType == $type) ) {
       $this->send($message);
       return;
     }
-    (new $loggerType)->send($mssage);
+    (new $type)->send($mssage);
   }
 
   public function getType() {
@@ -32,7 +34,10 @@ abstract class Logger
   }
 
   public function setType(string $type) {
-    if(!Helpers::loggerTypeIsValid($type)) trigger_error("Invalid logger type", E_USER_ERROR);
+    if(!Helpers::loggerTypeIsValid($type)) {
+      trigger_error("Invalid logger type.");
+      return;
+    }
     $this->currentType = $type;
   }
 }

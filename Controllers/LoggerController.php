@@ -8,8 +8,8 @@ include_once __DIR__."/../Config/autoload.php";
 class LoggerController
 {
   public function log(string $message) {
-    $default = Helpers::getDefaultLoggerType();
-    (Logger::createLogger($default))->send($message);
+    $defaultType = Helpers::getDefaultLoggerType();
+    (Logger::createLogger($defaultType))->send($message);
   }
 
   public function logTo(string $message, string $type) {
