@@ -1,6 +1,7 @@
 <?php
 namespace phpLogger\Factory;
 use phpLogger\Helpers\Helpers;
+include_once __DIR__."/../Config/autoload.php";
 
 //This is a logger factory
 abstract class Logger
@@ -8,9 +9,11 @@ abstract class Logger
   private $initialType;
   private $currentType;
 
-  public static function createLogger(string $logger){
-    if(!Helpers::loggerTypeIsValid($logger)) trigger_error("Invalid logger type", E_USER_ERROR);
-    return new $logger();
+  public static function createLogger(string $type){
+    if(!Helpers::loggerTypeIsValid($type)) trigger_error("Invalid logger type", E_USER_ERROR);
+    $modelsNamespace = "\\phpLogger\\Models";
+    $type = $modelsNamespace."\\".ucwords($type)."Logger";
+    return new $type();
   }
 
   abstract protected function send(string $message): void;

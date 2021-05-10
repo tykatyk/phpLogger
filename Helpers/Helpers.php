@@ -2,6 +2,7 @@
 namespace phpLogger\Helpers;
 use const phpLogger\Config\LOGGERS;
 use const phpLogger\Config\DEFAULT_LOGGER;
+include_once __DIR__."/../Config/loggerConfig.php";
 
 class Helpers {
   public static function loggerTypeIsValid(string $type) {
@@ -10,6 +11,7 @@ class Helpers {
   }
 
   public static function emailIsValid(string $address) {
+    $address = filter_var($address, FILTER_SANITIZE_EMAIL);
     return filter_var($address, FILTER_VALIDATE_EMAIL) ? true : false;
   }
 

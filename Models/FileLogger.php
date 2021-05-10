@@ -12,6 +12,7 @@ class FileLogger extends Logger
 
   public function __construct() {
     $this->initialType = $this->currentType = "file";
+    if(strlen(LOGGERS['file']['path']) == 0) trigger_error("A path to write log file is empty", E_USER_ERROR);
     $this->path = LOGGERS['file']['path'];
   }
 

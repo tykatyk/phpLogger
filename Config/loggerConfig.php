@@ -1,13 +1,18 @@
 <?php
 namespace phpLogger\Config;
 
-//available loggers and their configuration
-//new loggers can be added here
+//This file describes available loggers and their configuration.
+//New loggers can also be added here
 define("phpLogger\Config\LOGGERS", [
-  "email" => [
+
+  "email" => [//before sending emails make sure you have SMTP configured in php.ini
     "to" => "tykatyk@gmail.com",
     "subject" => "New message from phpLogger",
-    "additional_headers" => [],
+    "additional_headers" => [
+      "From" => "vinashelter@gmail.com",//<-this header is required to successfully send emails
+      "Reply-To" => "webmaster@phpLogger.com",
+      "X-Mailer" => "PHP//".phpversion()
+    ],
     "additional_params" => ""
   ],
   "database" => [

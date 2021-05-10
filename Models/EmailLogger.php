@@ -15,7 +15,7 @@ class EmailLogger extends Logger
     if(!Helpers::emailIsValid(LOGGERS['email']['to'])) {
       trigger_error("'".LOGGERS['email']['to']."' not valid email address", E_USER_ERROR);
     }
-    $this->$address = LOGGERS['email']['to'];
+    $this->address = LOGGERS['email']['to'];
   }
 
   public function send(string $message):void {
