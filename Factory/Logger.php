@@ -1,5 +1,5 @@
 <?php
-namespace phpLogger\Models;
+namespace phpLogger\Factory;
 use phpLogger\Helpers\Helpers;
 
 abstract class Logger

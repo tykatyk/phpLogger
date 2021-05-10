@@ -1,6 +1,7 @@
 <?php
 namespace phpLogger\Models;
 use phpLogger\Helpers\Helpers;
+use phpLogger\Factory\Logger;
 use const \phpLogger\Config\LOGGERS;
 include_once __DIR__."/../Config/autoload.php";
 include_once __DIR__."/../Config/loggerConfig.php";
