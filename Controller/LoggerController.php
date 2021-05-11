@@ -1,5 +1,5 @@
 <?php
-namespace phpLogger\Controllers;
+namespace phpLogger\Controller;
 use phpLogger\Factory\Logger;
 use phpLogger\Helpers\Helpers;
 use const phpLogger\Config\LOGGERS;
@@ -18,7 +18,6 @@ class LoggerController
 
   public function logToAll(string $message) {
     $types = array_keys(LOGGERS);
-
     foreach($types as $type) {
       (Logger::createLogger($type))->send($message);
     }

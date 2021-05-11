@@ -23,6 +23,8 @@ class Helpers {
     return (strlen($message) == 0 ? true : false);
   }
 
+  //Checks if a message ends with a new line symbol.
+  //This is just to be sure that log messages will be readable when displayed
   public static function messageHasNewLineChar(string $message) {
     return ($message[strlen($message) - 1] == "\n" ? true : false);
   }

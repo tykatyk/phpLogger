@@ -6,7 +6,7 @@ include_once __DIR__."/../Config/autoload.php";
 abstract class Logger
 {
   private $initialType;
-  private $currentType;
+  protected $currentType;
 
   public static function createLogger(string $type){//this is a factory method
     if(!Helpers::loggerTypeIsValid($type)) trigger_error("Can't create logger of type ".$type.". Invalid type.", E_USER_ERROR);
@@ -26,7 +26,7 @@ abstract class Logger
       $this->send($message);
       return;
     }
-    (new $type)->send($mssage);
+    $this::createLogger($type)->send($message);
   }
 
   public function getType() {
@@ -35,7 +35,7 @@ abstract class Logger
 
   public function setType(string $type) {
     if(!Helpers::loggerTypeIsValid($type)) {
-      trigger_error("Invalid logger type.");
+      trigger_error("Invalid logger type. Type wasn't set.");
       return;
     }
     $this->currentType = $type;
