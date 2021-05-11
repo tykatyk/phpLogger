@@ -18,10 +18,6 @@ abstract class Logger
   abstract public function send(string $message): void;
 
   public function sendByLogger(string $message, string $type) {
-    if(!Helpers::loggerTypeIsValid($type)) {
-      trigger_error("Message wasn't sent. Invalid logger type.");
-      return;
-    }
     if( ($this->currentType == $this->initialType) && ($this->currentType == $type) ) {
       $this->send($message);
       return;
