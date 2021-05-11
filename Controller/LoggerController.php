@@ -3,6 +3,7 @@ namespace phpLogger\Controller;
 use phpLogger\Factory\Logger;
 use phpLogger\Helpers\Helpers;
 use const phpLogger\Config\LOGGERS;
+include_once __DIR__."/../Config/settings.php";
 include_once __DIR__."/../Config/autoload.php";
 
 class LoggerController
